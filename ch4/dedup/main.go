@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-//!+
+// !+
 func main() {
 	seen := make(map[string]bool) // a set of strings
 	input := bufio.NewScanner(os.Stdin)

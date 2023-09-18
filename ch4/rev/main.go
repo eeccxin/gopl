@@ -30,6 +30,14 @@ func main() {
 	fmt.Println(s) // "[2 3 4 5 0 1]"
 	//!-slice
 
+	var y []int
+	x := make([]int, 1, 2)
+	for i := 0; i < 10; i++ {
+		y = append(x, i)
+		fmt.Printf("%p ,%d cap=%d\t%v\n", &x, i, cap(x), x)
+		x = y
+	}
+
 	// Interactive test of reverse.
 	input := bufio.NewScanner(os.Stdin)
 outer:
@@ -49,7 +57,7 @@ outer:
 	// NOTE: ignoring potential errors from input.Err()
 }
 
-//!+rev
+// !+rev
 // reverse reverses a slice of ints in place.
 func reverse(s []int) {
 	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {

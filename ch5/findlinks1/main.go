@@ -9,25 +9,55 @@ package main
 
 import (
 	"fmt"
-	"os"
-
 	"golang.org/x/net/html"
 )
 
+type inter interface {
+	String() string
+	Hash() string
+}
+
+type IntSet struct { /* ... */
+}
+
+func (*IntSet) String() string {
+	return "111"
+}
+
+func (s *IntSet) Hash() string {
+	return ""
+
+}
+
 func main() {
-	doc, err := html.Parse(os.Stdin)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
-		os.Exit(1)
+	//doc, err := html.Parse(os.Stdin)
+	//if err != nil {
+	//	fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
+	//	os.Exit(1)
+	//}
+	//for _, link := range visit(nil, doc) {
+	//	fmt.Println(link)
+	//}
+
+	type str struct {
+		i   inter
+		num uint32
+		imp IntSet
 	}
-	for _, link := range visit(nil, doc) {
-		fmt.Println(link)
+	type imp struct { /* ... */
 	}
+
+	set := IntSet{}
+	var v = set.String()
+
+	s := str{&set, 10, set}
+	fmt.Printf("%v|%v", &s, v)
+
 }
 
 //!-main
 
-//!+visit
+// !+visit
 // visit appends to links each link found in n and returns the result.
 func visit(links []string, n *html.Node) []string {
 	if n.Type == html.ElementNode && n.Data == "a" {

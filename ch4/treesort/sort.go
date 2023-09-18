@@ -4,9 +4,11 @@
 // See page 101.
 
 // Package treesort provides insertion sort using an unbalanced binary tree.
-package treesort
+package main
 
-//!+
+import "fmt"
+
+// !+
 type tree struct {
 	value       int
 	left, right *tree
@@ -45,6 +47,33 @@ func add(t *tree, value int) *tree {
 		t.right = add(t.right, value)
 	}
 	return t
+}
+
+func (t *tree) String() string {
+	var values []int
+	t.traverse(&values)
+	return fmt.Sprintf("%v", values)
+}
+
+func (t *tree) traverse(values *[]int) {
+	if t != nil {
+		t.left.traverse(values)
+		*values = append(*values, t.value)
+		t.right.traverse(values)
+	}
+}
+
+func main() {
+	var root *tree
+	root = add(root, 5)
+	root = add(root, 3)
+	root = add(root, 7)
+	root = add(root, 1)
+	root = add(root, 4)
+	root = add(root, 6)
+	root = add(root, 8)
+
+	fmt.Println(root.String()) // 输出：[1 3 4 5 6 7 8]
 }
 
 //!-
