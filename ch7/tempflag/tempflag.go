@@ -13,12 +13,14 @@ import (
 	"gopl.io/ch7/tempconv"
 )
 
-//!+
-var temp = tempconv.CelsiusFlag("temp", 20.0, "the temperature")
+// !+
+var temp = tempconv.CelsiusFlag("temp", 20.0, "the temperature(必须以C或F结尾)")
+var fTemp = tempconv.FahrenheitFlag("fTemp", 100.0, "the f temperature(必须以C或F结尾)")
 
 func main() {
 	flag.Parse()
 	fmt.Println(*temp)
+	fmt.Println("华氏温度:", *fTemp)
 }
 
 //!-
