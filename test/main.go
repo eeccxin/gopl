@@ -25,7 +25,13 @@ func (r *Rectangle) Type() string {
 	panic("implement me")
 }
 
-type IntSet struct{}
+type IntSet struct {
+	Value int64
+}
+
+func (s *IntSet) Write(p []byte) (n int, err error) {
+	return
+}
 
 func (*IntSet) String() string {
 	return ""
@@ -34,4 +40,27 @@ func main() {
 
 	set := IntSet{}
 	var _ = set.String()
+
+	//7.4 接口值相关实验
+	//var w io.Writer
+	//fmt.Println(w != nil) //false
+	//w = os.Stdout
+	//fmt.Println(w != nil) //true
+	//fmt.Println(reflect.TypeOf(w), reflect.ValueOf(w))
+	////w.Write([]byte("hello")) // "hello"
+	//w = new(bytes.Buffer)
+	//fmt.Println(reflect.TypeOf(w), reflect.ValueOf(w))
+	////w = nil
+	////println(w)
+	//
+	//w = &IntSet{12}
+	//n, _ := w.Write([]byte("str"))
+	//println(n)
+	//fmt.Println(reflect.TypeOf(w), reflect.ValueOf(w))
+	//var x interface{} = time.Now()
+	//fmt.Println(reflect.TypeOf(x), reflect.ValueOf(x))
+	//
+	//x = []int{1, 2, 3}
+	//fmt.Println(reflect.TypeOf(x), reflect.ValueOf(x))
+
 }
