@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-//!+main
+// !+main
 type Track struct {
 	Title  string
 	Artist string
@@ -40,7 +40,7 @@ func length(s string) time.Duration {
 
 //!-main
 
-//!+printTracks
+// !+printTracks
 func printTracks(tracks []*Track) {
 	const format = "%v\t%v\t%v\t%v\t%v\t\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
@@ -54,7 +54,7 @@ func printTracks(tracks []*Track) {
 
 //!-printTracks
 
-//!+artistcode
+// !+artistcode
 type byArtist []*Track
 
 func (x byArtist) Len() int           { return len(x) }
@@ -63,7 +63,7 @@ func (x byArtist) Swap(i, j int)      { x[i], x[j] = x[j], x[i] }
 
 //!-artistcode
 
-//!+yearcode
+// !+yearcode
 type byYear []*Track
 
 func (x byYear) Len() int           { return len(x) }
@@ -141,7 +141,7 @@ Ready 2 Go  Martin Solveig  Smash              2011  4m24s
 //!-customout
 */
 
-//!+customcode
+// !+customcode
 type customSort struct {
 	t    []*Track
 	less func(x, y *Track) bool
@@ -164,4 +164,11 @@ func init() {
 	fmt.Println(values)                     // "[4 3 1 1]"
 	fmt.Println(sort.IntsAreSorted(values)) // "false"
 	//!-ints
+
+	//!-string
+	sValues := []string{"a", "b", "c", "e", "d"}
+	fmt.Println(sort.StringsAreSorted(sValues)) //false
+	sort.Strings(sValues)
+	fmt.Println(sValues)
+	fmt.Println(sort.StringsAreSorted(sValues)) //true
 }
