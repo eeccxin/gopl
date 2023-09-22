@@ -19,6 +19,7 @@ func main() {
 	db := database{"shoes": 50, "socks": 5}
 	http.HandleFunc("/list", db.list)
 	http.HandleFunc("/price", db.price)
+	//当调用 http.ListenAndServe 函数时，如果传递 nil 作为handler，它会默认使用 DefaultServeMux 作为服务器的主 handler。
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
 

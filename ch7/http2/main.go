@@ -23,14 +23,14 @@ func (d dollars) String() string { return fmt.Sprintf("$%.2f", d) }
 
 type database map[string]dollars
 
-//!+handler
+// !+handler
 func (db database) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	switch req.URL.Path {
 	case "/list":
 		for item, price := range db {
 			fmt.Fprintf(w, "%s: %s\n", item, price)
 		}
-	case "/price":
+	case "/price": //例子 http://localhost:8000/price?item=shoes
 		item := req.URL.Query().Get("item")
 		price, ok := db[item]
 		if !ok {
@@ -46,3 +46,6 @@ func (db database) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 //!-handler
+
+//请求
+//http://localhost:8000/list

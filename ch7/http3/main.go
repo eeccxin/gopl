@@ -22,7 +22,7 @@ func (d dollars) String() string { return fmt.Sprintf("$%.2f", d) }
 func main() {
 	db := database{"shoes": 50, "socks": 5}
 	mux := http.NewServeMux()
-	mux.Handle("/list", http.HandlerFunc(db.list))
+	mux.Handle("/list", http.HandlerFunc(db.list)) //进行了类型转换，http.HandlerFunc函数类型实现了接口http.Handler
 	mux.Handle("/price", http.HandlerFunc(db.price))
 	log.Fatal(http.ListenAndServe("localhost:8000", mux))
 }
