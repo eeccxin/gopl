@@ -40,7 +40,13 @@ func main() {
 func countLines(f *os.File, counts map[string]int) {
 	input := bufio.NewScanner(f)
 	for input.Scan() {
-		counts[input.Text()]++
+		//counts[input.Text()]++
+		//练习 1.4
+		line := input.Text()
+		counts[line]++
+		if counts[line] > 1 {
+			fmt.Printf("%s\t%s\n", f.Name(), line)
+		}
 	}
 	// NOTE: ignoring potential errors from input.Err()
 }
