@@ -1,5 +1,11 @@
 package main
 
+import (
+	"database/sql"
+	"fmt"
+	"os"
+)
+
 // Shape 定义一个接口
 type Shape interface {
 	Area() float64
@@ -36,6 +42,13 @@ func (s *IntSet) Write(p []byte) (n int, err error) {
 func (*IntSet) String() string {
 	return ""
 }
+
+func listTracks(db sql.DB, artist string, minYear, maxYear int) {
+	_, _ = db.Exec(
+		"SELECT * FROM tracks WHERE artist = ? AND ? <= year AND year <= ?",
+		artist, minYear, maxYear)
+	// ...
+}
 func main() {
 
 	set := IntSet{}
@@ -63,4 +76,33 @@ func main() {
 	//x = []int{1, 2, 3}
 	//fmt.Println(reflect.TypeOf(x), reflect.ValueOf(x))
 
+	// error类型
+	//errors.New("")
+	//fmt.Errorf("string")
+	//fmt.Println(errors.New("EOF") == errors.New("EOF"))
+	//errno := syscall.Errno(2)
+	//println(errno)
+
+	// 7.10 类型断言
+	//var w io.Writer
+	//w = os.Stdout
+	//f := w.(*os.File) // success: f == os.Stdout
+	//fmt.Println(f)
+	//c := w.(*bytes.Buffer) // panic: interface holds *os.File, not *bytes.Buffer
+	//fmt.Println(c)
+
+	//接口断言
+	//var w io.Writer
+	//w = os.Stdout
+	//rw := w.(io.ReadWriter) // success: *os.File has both Read and Write
+	//fmt.Printf("%T|%v", rw, rw)
+	//w = &IntSet{}
+	//rw = w.(io.ReadWriter) // panic: *ByteCounter has no Read method
+	//fmt.Println(rw)
+
+	// 错误类型断言
+	_, err := os.Open("/no/such/file")
+	println(os.IsExist(err))
+	fmt.Println(err)         // "open /no/such/file: No such file or directory"
+	fmt.Printf("%#v\n", err) //&fs.PathError{Op:"open", Path:"/no/such/file", Err:0x3}
 }
