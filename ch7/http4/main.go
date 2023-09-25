@@ -9,6 +9,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 )
@@ -32,9 +33,40 @@ func (d dollars) String() string { return fmt.Sprintf("$%.2f", d) }
 type database map[string]dollars
 
 func (db database) list(w http.ResponseWriter, req *http.Request) {
-	for item, price := range db {
-		fmt.Fprintf(w, "%s: %s\n", item, price)
+	// 表单展示
+	tmpl := template.Must(template.New("list").Parse(`
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<title>Inventory List</title>
+		</head>
+		<body>
+			<table>
+				<tr>
+					<th>Item</th>
+					<th>Price</th>
+				</tr>
+				{{range $item, $price := .}}
+				<tr>
+					<td>{{$item}}</td>
+					<td>{{$price}}</td>
+				</tr>
+				{{end}}
+			</table>
+		</body>
+		</html>
+	`))
+
+	err := tmpl.Execute(w, db)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
 	}
+
+	// 直接输出
+	//for item, price := range db {
+	//	fmt.Fprintf(w, "%s: %s\n", item, price)
+	//}
 }
 
 func (db database) price(w http.ResponseWriter, req *http.Request) {
