@@ -10,6 +10,7 @@ package main
 import (
 	"fmt"
 	"golang.org/x/net/html"
+	"os"
 )
 
 type inter interface {
@@ -30,29 +31,14 @@ func (s *IntSet) Hash() string {
 }
 
 func main() {
-	//doc, err := html.Parse(os.Stdin)
-	//if err != nil {
-	//	fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
-	//	os.Exit(1)
-	//}
-	//for _, link := range visit(nil, doc) {
-	//	fmt.Println(link)
-	//}
-
-	type str struct {
-		i   inter
-		num uint32
-		imp IntSet
+	doc, err := html.Parse(os.Stdin)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
+		os.Exit(1)
 	}
-	type imp struct { /* ... */
+	for _, link := range visit(nil, doc) {
+		fmt.Println(link)
 	}
-
-	set := IntSet{}
-	var v = set.String()
-
-	s := str{&set, 10, set}
-	fmt.Printf("%v|%v", &s, v)
-
 }
 
 //!-main
@@ -67,9 +53,19 @@ func visit(links []string, n *html.Node) []string {
 			}
 		}
 	}
+
+	// 循环方式
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		links = visit(links, c)
 	}
+
+	////练习5.1 递归方式
+	//if n.FirstChild != nil {
+	//	links = visit(links, n.FirstChild)
+	//}
+	//if n.NextSibling != nil {
+	//	links = visit(links, n.NextSibling)
+	//}
 	return links
 }
 

@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"os"
 )
 
 // Shape 定义一个接口
@@ -101,8 +100,19 @@ func main() {
 	//fmt.Println(rw)
 
 	// 错误类型断言
-	_, err := os.Open("/no/such/file")
-	println(os.IsExist(err))
-	fmt.Println(err)         // "open /no/such/file: No such file or directory"
-	fmt.Printf("%#v\n", err) //&fs.PathError{Op:"open", Path:"/no/such/file", Err:0x3}
+	//_, err := os.Open("/no/such/file")
+	//println(os.IsExist(err))
+	//fmt.Println(err)         // "open /no/such/file: No such file or directory"
+	//fmt.Printf("%#v\n", err) //&fs.PathError{Op:"open", Path:"/no/such/file", Err:0x3}
+
+	// 4.2 Slice
+	months := [...]string{1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July",
+		8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
+	Q2 := months[4:7]
+	summer := months[6:9]
+	fmt.Println(Q2)     // ["April" "May" "June"]
+	fmt.Println(summer) // ["June" "July" "August"]
+	//fmt.Println(summer[:20])    // panic: runtime error: slice bounds out of range [:20] with capacity 7
+	endlessSummer := summer[:5] // extend a slice (within capacity)
+	fmt.Println(endlessSummer)  // "[June July August September October]"
 }
