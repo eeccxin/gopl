@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	"strconv"
 )
 
 // Shape 定义一个接口
@@ -47,7 +49,45 @@ func listTracks(db sql.DB, artist string, minYear, maxYear int) {
 		artist, minYear, maxYear)
 	// ...
 }
+
+type Flags uint
+
+const (
+	FlagUp           Flags = 1 << iota // is up
+	FlagBroadcast                      // supports broadcast access capability
+	FlagLoopback                       // is a loopback interface
+	FlagPointToPoint                   // belongs to a point-to-point link
+	FlagMulticast                      // supports multicast access capability
+)
+
+type Weekday int
+
+const (
+	Sunday Weekday = iota
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+)
+
 func main() {
+
+	fmt.Printf(strconv.Itoa(1 << 0))
+	//3.5.3 utf8编码
+	//str := "世界"
+	//str1 := "\xe4\xb8\x96\xe7\x95\x8c"
+	//str2 := "\u4e16\u754c"
+	//str3 := "\U00004e16\U0000754c"
+	//
+	//fmt.Printf("%b\n", []byte(str))
+	//fmt.Printf("%b\n", []byte(str1))
+	//fmt.Printf("%b\n", []byte(str2))
+	//fmt.Printf("%b\n", []byte(str3))
+	//
+	//fmt.Println(string(0x4e16))  // 世
+	//fmt.Println(string(1234567)) // "�
 
 	// 3.1 整型
 	//var x = 10
