@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 )
 
 // Shape 定义一个接口
@@ -50,8 +49,97 @@ func listTracks(db sql.DB, artist string, minYear, maxYear int) {
 }
 func main() {
 
-	set := IntSet{}
-	var _ = set.String()
+	// 3.1 整型
+	//var x = 10
+	//var y uint = 20
+	//
+	//if reflect.TypeOf(x) == reflect.TypeOf(y) {
+	//	fmt.Println("x 和 y 是相同类型")
+	//} else {
+	//	fmt.Println("x 和 y 是不同类型")
+	//}
+
+	//// 位清除 与 异或操作
+	//a := 12                  // 二进制表示为 1100
+	//b := 7                   // 二进制表示为 0111
+	//fmt.Printf("%b\n", a&^b) // 位清徐,输出结果为 1000，即 8
+	//fmt.Printf("%b\n", a^b)  // 异或,输出结果为 1011
+	//fmt.Printf("%b\n", ^b)   //用异或实现取反，结果为 -1000，前面的-表示1000是负数
+
+	////位溢出
+	//var u uint8 = 255
+	//fmt.Println(u, u+1, u*u) // "255 0 1"
+	//var i int8 = 127
+	//fmt.Println(i, i+1, i*i) // "127 -128 1"//set := IntSet{}
+
+	//3.2 浮点数
+	//类型转换造成的精度缺失或数值错误
+	//f := 1e100 // a float64
+	//fmt.Printf("转换前的浮点数：%b", f)
+	//i := int8(f) // 结果依赖于具体实现
+	//fmt.Printf("转换后的整型：%b", i)
+	//println(i)
+	//
+	//fmt.Println("最小正非零值:", math.SmallestNonzeroFloat64)
+	//fmt.Println("最大正有限值:", math.MaxFloat64)
+	//fmt.Println("正无穷大:", math.Inf(1))
+	//fmt.Println("负无穷大:", math.Inf(-1))
+	//fmt.Println("非数值（NaN）:", math.NaN())
+	//
+	//o := 0666
+	//fmt.Printf("%d %[1]o %[1]o\n", o) // "438 666 0666"
+	//x := int64(0xdeadbeef)
+	//fmt.Printf("%d %[1]x %#[1]x %#[1]X\n", x)
+
+	////非数和无穷数
+	//nan := math.NaN()
+	//fmt.Println(nan == nan, nan < nan, nan > nan) // "false false false"
+
+	////3.3 复数
+	//fmt.Println(1i * 1i) // "(-1+0i)", i^2 = -1
+
+	//// 3.5 字符串
+	//str := "\u4E2D\u6587" // 表示中文字符 "中文"
+	//fmt.Println(str)
+	//fmt.Println("这是一个响铃示例\a")
+	//fmt.Println("ab\bc")                          //退格，ac
+	//fmt.Println("ab\rc")                          //回车，cb
+	//fmt.Println("这是第一页内容\f这是第二页内容") //换页
+	///*
+	//	这是第一页内容
+	//	              这是第二页内容
+	//*/
+	//fmt.Println("111\v222")                           //垂直制表符
+	//fmt.Println("\xe4\xb8\x96\xe7\x95\x8c" == "世界") // true
+	//byteSequence := []byte("\xe4\xb8\x96\xe7\x95\x8c")
+	//unicodeString, err := strconv.Unquote(`"` + string(byteSequence) + `"`)
+	//if err != nil {
+	//	fmt.Println("解码失败:", err)
+	//	return
+	//}
+	//fmt.Println(unicodeString)
+	//
+	//s := "Hello, 世界"
+	//fmt.Println(len(s))                    // "13"
+	//fmt.Println(utf8.RuneCountInString(s)) // "9"
+	//for i := 0; i < len(s); {
+	//	r, size := utf8.DecodeRuneInString(s[i:]) //解码unicode字符
+	//	fmt.Printf("%d\t%c\n", i, r)
+	//	i += size
+	//}
+	/*
+		0       H
+		1       e
+		2       l
+		3       l
+		4       o
+		5       ,
+		6
+		7       世
+		10      界
+	*/
+
+	//var _ = set.String()
 
 	//7.4 接口值相关实验
 	//var w io.Writer
@@ -106,13 +194,14 @@ func main() {
 	//fmt.Printf("%#v\n", err) //&fs.PathError{Op:"open", Path:"/no/such/file", Err:0x3}
 
 	// 4.2 Slice
-	months := [...]string{1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July",
-		8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
-	Q2 := months[4:7]
-	summer := months[6:9]
-	fmt.Println(Q2)     // ["April" "May" "June"]
-	fmt.Println(summer) // ["June" "July" "August"]
-	//fmt.Println(summer[:20])    // panic: runtime error: slice bounds out of range [:20] with capacity 7
-	endlessSummer := summer[:5] // extend a slice (within capacity)
-	fmt.Println(endlessSummer)  // "[June July August September October]"
+	//months := [...]string{1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July",
+	//	8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
+	//Q2 := months[4:7]
+	//summer := months[6:9]
+	//fmt.Println(Q2)     // ["April" "May" "June"]
+	//fmt.Println(summer) // ["June" "July" "August"]
+	////fmt.Println(summer[:20])    // panic: runtime error: slice bounds out of range [:20] with capacity 7
+	//endlessSummer := summer[:5] // extend a slice (within capacity)
+	//fmt.Println(endlessSummer)  // "[June July August September October]"
+
 }
