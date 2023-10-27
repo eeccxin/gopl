@@ -14,11 +14,8 @@ func main() {
 	fmt.Println(string(s)) // 输出 "界世 ,olleH"
 }
 
-// 思路：先反转整个bytes数组，再对每个rune字符反转
+// 思路：先每个rune字符反转，再反转整个bytes数组
 func reverse(s []byte) {
-	// 反转整个切片
-	reverseBytes(s)
-
 	// 反转每个UTF-8字符
 	start := 0
 	for start < len(s) {
@@ -26,6 +23,8 @@ func reverse(s []byte) {
 		reverseBytes(s[start : start+size])
 		start += size
 	}
+	// 反转整个切片
+	reverseBytes(s)
 }
 
 func reverseBytes(s []byte) {
