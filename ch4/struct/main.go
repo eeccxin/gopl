@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"time"
 )
@@ -62,11 +63,13 @@ func main() {
 	//fmt.Printf("%T", r)
 	//fmt.Println(str) // 输出 "世"
 
+	// 测试匿名函数的变量作用域
 	var rmdirs []func()
 	for _, d := range tempDirs() {
-		dir := d // NOTE: necessary!
-		//os.MkdirAll(dir, 0755) // creates parent directories too
+		dir := d               // NOTE: necessary!
+		os.MkdirAll(dir, 0755) // creates parent directories too
 		rmdirs = append(rmdirs, func() {
+			fmt.Printf("dir:%v\n", dir)
 			os.RemoveAll(dir)
 		})
 	}
