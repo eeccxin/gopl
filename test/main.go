@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"strconv"
+	"time"
 )
 
 // Shape 定义一个接口
@@ -74,7 +74,31 @@ const (
 
 func main() {
 
-	fmt.Printf(strconv.Itoa(1 << 0))
+	//5.9 panic相关
+	// 捕获异常
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Println("Recovered from panic:", r)
+			}
+		}()
+
+		panic("Something went wrong!")
+	}()
+	// 主协程继续执行其他操作
+	time.Sleep(10 * time.Second)
+	fmt.Println("Main goroutine continues...")
+
+	// 主动抛出异常
+	//panic(fmt.Sprintf("invalid suit %q", "抛出panic 恐慌"))
+	/*output:
+	panic: invalid suit "抛出panic 恐慌"
+
+	goroutine 1 [running]:
+	main.main()
+	        E:/Projects/go/gopl.io/test/main.go:76 +0x65
+	*/
+
 	//3.5.3 utf8编码
 	//str := "世界"
 	//str1 := "\xe4\xb8\x96\xe7\x95\x8c"
