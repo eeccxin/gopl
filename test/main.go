@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"time"
+	"math"
 )
 
 // Shape 定义一个接口
@@ -72,22 +72,65 @@ const (
 	Saturday
 )
 
+type Point struct{ X, Y float64 }
+
+// Distance traditional function
+func Distance(p, q Point) float64 {
+	return math.Hypot(q.X-p.X, q.Y-p.Y)
+}
+
+// Distance same thing, but as a method of the Point type
+func (p Point) Distance(q Point) float64 {
+	return math.Hypot(q.X-p.X, q.Y-p.Y)
+}
+
+//两种错误的方法接受者类型
+//type Person struct {
+//	Name string
+//	Age  int
+//}
+
+//type point *Person
+//
+//func (p point) SayHello() {
+//	fmt.Println("Hello, my name is", p.Name)
+//}
+
+//type api interface {
+//}
+//
+//func (a api) SayHello() {
+//	fmt.Println("api")
+//}
+
 func main() {
 
-	//5.9 panic相关
-	// 捕获异常
-	go func() {
-		defer func() {
-			if r := recover(); r != nil {
-				fmt.Println("Recovered from panic:", r)
-			}
-		}()
+	p := Point{1, 2}
+	q := Point{4, 6}
+	distance := (Point).Distance // method expression
+	fmt.Println(distance(p, q))  // "5"
+	fmt.Printf("%T\n", distance) // "func(Point, Point) float64"
 
-		panic("Something went wrong!")
-	}()
-	// 主协程继续执行其他操作
-	time.Sleep(10 * time.Second)
-	fmt.Println("Main goroutine continues...")
+	//6.1 方法声明
+	//p := Point{1, 2}
+	//q := Point{4, 6}
+	//fmt.Println(Distance(p, q)) // "5", function call
+	//fmt.Println(p.Distance(q))  // "5", method call
+
+	////5.9 panic相关
+	//// 捕获异常
+	//go func() {
+	//	defer func() {
+	//		if r := recover(); r != nil {
+	//			fmt.Println("Recovered from panic:", r)
+	//		}
+	//	}()
+	//
+	//	panic("Something went wrong!")
+	//}()
+	//// 主协程继续执行其他操作
+	//time.Sleep(10 * time.Second)
+	//fmt.Println("Main goroutine continues...")
 
 	// 主动抛出异常
 	//panic(fmt.Sprintf("invalid suit %q", "抛出panic 恐慌"))
