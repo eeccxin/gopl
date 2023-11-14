@@ -43,7 +43,7 @@ func (*IntSet) String() string {
 	return ""
 }
 
-func listTracks(db sql.DB, artist string, minYear, maxYear int) {
+func listTracks(db *sql.DB, artist string, minYear, maxYear int) {
 	_, _ = db.Exec(
 		"SELECT * FROM tracks WHERE artist = ? AND ? <= year AND year <= ?",
 		artist, minYear, maxYear)
@@ -105,11 +105,30 @@ func (p Point) Distance(q Point) float64 {
 
 func main() {
 
-	p := Point{1, 2}
-	q := Point{4, 6}
-	distance := (Point).Distance // method expression
-	fmt.Println(distance(p, q))  // "5"
-	fmt.Printf("%T\n", distance) // "func(Point, Point) float64"
+	ch := make(chan int)
+
+	go func() {
+		for i := 0; i < 5; i++ {
+			ch <- i
+		}
+	}()
+
+	for num := range ch {
+		fmt.Println(num)
+	}
+
+	////测试time格式化
+	//iTime := time.Now()
+	//fmt.Printf("%v\n", iTime)
+	//formatTime := iTime.Format("15:04:05\n")
+	//fmt.Println(formatTime)
+	//fmt.Println(time.Parse("15:04:05\n", formatTime))
+
+	//p := Point{1, 2}
+	//q := Point{4, 6}
+	//distance := (Point).Distance // method expression
+	//fmt.Println(distance(p, q))  // "5"
+	//fmt.Printf("%T\n", distance) // "func(Point, Point) float64"
 
 	//6.1 方法声明
 	//p := Point{1, 2}

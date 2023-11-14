@@ -7,6 +7,7 @@
 package main
 
 import (
+	"flag"
 	"io"
 	"log"
 	"net"
@@ -25,7 +26,10 @@ func handleConn(c net.Conn) {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:8000")
+	port := flag.String("port", "8000", "port number")
+	flag.Parse()
+
+	listener, err := net.Listen("tcp", "localhost:"+*port)
 	if err != nil {
 		log.Fatal(err)
 	}

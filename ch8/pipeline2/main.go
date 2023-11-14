@@ -8,7 +8,7 @@ package main
 
 import "fmt"
 
-//!+
+// !+
 func main() {
 	naturals := make(chan int)
 	squares := make(chan int)
@@ -28,6 +28,18 @@ func main() {
 		}
 		close(squares)
 	}()
+
+	// 读ok值的臃肿写法
+	//go func() {
+	//	for {
+	//		x, ok := <-naturals
+	//		if !ok {
+	//			break // channel was closed and drained
+	//		}
+	//		squares <- x * x
+	//	}
+	//	close(squares)
+	//}()
 
 	// Printer (in main goroutine)
 	for x := range squares {

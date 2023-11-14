@@ -13,7 +13,7 @@ import (
 
 // !+
 func main() {
-	// go spinner(100 * time.Millisecond)
+	go spinner(100 * time.Millisecond)
 	const n = 45
 	fibN := fib(n) // slow
 	fmt.Printf("\rFibonacci(%d) = %d\n", n, fibN)
@@ -22,7 +22,7 @@ func main() {
 func spinner(delay time.Duration) {
 	for {
 		for _, r := range `-\|/` {
-			fmt.Printf("\r%c", r)
+			fmt.Printf("\r%c", r) //回车 + %c
 			time.Sleep(delay)
 		}
 	}
