@@ -41,6 +41,20 @@ func main() {
 			return
 		}
 	}
+	
+	////解决goroutine泄露
+	//tick := time.NewTicker(1 * time.Second)
+	//defer tick.Stop()
+	//for countdown := 10; countdown > 0; countdown-- {
+	//	fmt.Println(countdown)
+	//	select {
+	//	case <-tick.C:
+	//		// Do nothing.
+	//	case <-abort:
+	//		fmt.Println("Launch aborted!")
+	//		return
+	//	}
+	//}
 	launch()
 }
 

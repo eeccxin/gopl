@@ -21,11 +21,11 @@ func main() {
 	}
 	done := make(chan struct{})
 	go func() {
-		io.Copy(os.Stdout, conn) // NOTE: ignoring errors
+		io.Copy(os.Stdout, conn) // NOTE: ignoring errors,阻塞，知道服务端断开连接
 		log.Println("done")
 		done <- struct{}{} // signal the main goroutine
 	}()
-	mustCopy(conn, os.Stdin)
+	mustCopy(conn, os.Stdin) //阻塞，直到输入结束
 	//conn.(*net.TCPConn).CloseWrite()  //只关闭写连接，可以读完已写数据
 	conn.Close()
 	<-done // wait for background goroutine to finish

@@ -105,17 +105,27 @@ func (p Point) Distance(q Point) float64 {
 
 func main() {
 
-	ch := make(chan int)
-
-	go func() {
-		for i := 0; i < 5; i++ {
-			ch <- i
+	//select 多路控制
+	ch := make(chan int, 4)
+	for i := 0; i < 10; i++ {
+		select {
+		case x := <-ch:
+			fmt.Println(x) // "0" "2" "4" "6" "8"
+		case ch <- i:
 		}
-	}()
-
-	for num := range ch {
-		fmt.Println(num)
 	}
+
+	//ch := make(chan int)
+	//
+	//go func() {
+	//	for i := 0; i < 5; i++ {
+	//		ch <- i
+	//	}
+	//}()
+	//
+	//for num := range ch {
+	//	fmt.Println(num)
+	//}
 
 	////测试time格式化
 	//iTime := time.Now()
