@@ -19,7 +19,7 @@ import "gopl.io/ch12/params"
 // search implements the /search URL endpoint.
 func search(resp http.ResponseWriter, req *http.Request) {
 	var data struct {
-		Labels     []string `http:"l"`
+		Labels     []string `http:"l"` //传递切片，如l=golang&l=programming
 		MaxResults int      `http:"max"`
 		Exact      bool     `http:"x"`
 	}

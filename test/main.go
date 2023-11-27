@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"math"
+	"reflect"
+	"sync"
 )
 
 // Shape 定义一个接口
@@ -103,17 +105,52 @@ func (p Point) Distance(q Point) float64 {
 //	fmt.Println("api")
 //}
 
-func main() {
+// 同步
+var (
+	once     sync.Once
+	resource string
+)
 
-	//select 多路控制
-	ch := make(chan int, 4)
-	for i := 0; i < 10; i++ {
-		select {
-		case x := <-ch:
-			fmt.Println(x) // "0" "2" "4" "6" "8"
-		case ch <- i:
-		}
-	}
+func setup(arg string) {
+	fmt.Println("Performing setup with argument:", arg)
+	resource = "Initialized with " + arg
+}
+
+func getResource(arg string) string {
+	once.Do(func() {
+		setup(arg) //初始函数带参数，这样传参
+	})
+	return resource
+}
+
+func main() {
+	//t := reflect.TypeOf(3)  // a reflect.Type
+	//fmt.Println(t.String()) // "int"
+	//fmt.Println(t)          // "int"
+	//
+	//var w io.Writer = os.Stdout
+	//fmt.Println(reflect.TypeOf(w)) // "*os.File"
+
+	//v := reflect.ValueOf(3) // a reflect.Value
+	//fmt.Println(v)          // "3"
+	//fmt.Printf("%v\n", v)   // "3"
+	//fmt.Println(v.String()) // NOTE: "<int Value>"
+
+	x := 2
+	d := reflect.ValueOf(&x).Elem()   // d refers to the variable x
+	px := d.Addr().Interface().(*int) // px := &x
+	*px = 3                           // x = 3
+	fmt.Println(x)                    // "3"
+
+	////select 多路控制
+	//ch := make(chan int, 4)
+	//for i := 0; i < 10; i++ {
+	//	select {
+	//	case x := <-ch:
+	//		fmt.Println(x) // "0" "2" "4" "6" "8"
+	//	case ch <- i:
+	//	}
+	//}
 
 	//ch := make(chan int)
 	//
